@@ -1,6 +1,5 @@
 # GitHub setup
 
-Suggested description: `Anonymized React garage and parking marketplace case study with Mapbox discovery, Firebase authentication, Stripe promotion payments, owner listings, and admin operations.`
+Suggested description: `Anonymized React garage marketplace case study with Mapbox discovery, Firebase auth, Stripe rental subscriptions, owner settlement tracking, platform commission, and admin operations.`
 
-Suggested topics: `react` `redux` `firebase` `stripe` `mapbox` `marketplace` `geolocation` `payments` `admin-dashboard` `case-study`
-
+Suggested topics: `react` `redux` `firebase` `stripe` `mapbox` `marketplace` `geolocation` `recurring-billing` `platform-commission` `payment-operations` `admin-dashboard` `case-study`
