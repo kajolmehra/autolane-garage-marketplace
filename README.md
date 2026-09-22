@@ -39,22 +39,35 @@ AutoLane connects people searching for affordable garage or parking space with o
 | Data & files | API integration, image previews, insurance/contracts, and listing media workflows |
 | UX | Search, filters, pricing summaries, confirmation states, responsive forms, and feedback dialogs |
 
-## Core flow
+## Marketplace, booking, and settlement flow
+
+AutoLane keeps both sides of the marketplace visible: owners publish an approved space, renters complete a transparent checkout, and the platform carries the booking through recurring billing, commission, and settlement states.
 
 ```mermaid
-flowchart LR
-    Search[Search by location] --> Details[Review garage details]
-    Owner[Owner account] --> Create[Create listing]
-    Create --> Upload[Add images and documents]
-    Upload --> Review[Admin review]
-    Review --> Publish[Publish listing]
-    Publish --> Booking[Confirm rental terms]
-    Booking --> Charge[Collect rental charge + security deposit]
-    Charge --> Subscription[Create recurring booking subscription]
-    Subscription --> Fee[Apply platform service fee / commission]
-    Fee --> Settlement[Track owner settlement and payment state]
-    Publish --> Promote[Optional paid advertising]
+flowchart TB
+    Renter[Search by location and dates] --> Listings[Compare approved listings]
+    Listings --> Details[Review rate, deposit, policies, and availability]
+    Details --> Terms[Confirm rental terms]
+    Terms --> Checkout[Stripe checkout]
+    Checkout --> Payment{Payment authorised?}
+    Payment -->|No| Retry[Show actionable payment error]
+    Retry --> Checkout
+    Payment -->|Yes| Booking[Create booking / contract]
+    Booking --> Subscription[Create recurring payment schedule]
+    Subscription --> Fee[Calculate platform fee / commission]
+    Fee --> OwnerBalance[Create owner balance and settlement state]
+    OwnerBalance --> Reconcile[Reconcile charge, deposit, fees, and payout]
+
+    Owner[Owner workspace] --> Create[Create listing]
+    Create --> Documents[Upload images, insurance, and documents]
+    Documents --> Review[Admin approval]
+    Review -->|Approved| Publish[Publish listing]
+    Review -->|Changes needed| Create
+    Publish --> Listings
+    Publish --> Promote[Optional postal-area advertising]
 ```
+
+**Outcome:** a traceable rental lifecycle from local discovery to recurring payment and owner payout, with deposit and commission states attached to the booking record.
 
 ## Technical stack
 

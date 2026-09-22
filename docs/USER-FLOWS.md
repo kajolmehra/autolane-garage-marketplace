@@ -1,18 +1,26 @@
 # User flows
 
 ```mermaid
-flowchart LR
-    Visitor[Search location] --> Listings[Compare listings]
-    Listings --> Detail[Review garage detail]
-    Owner[Owner] --> Listing[Create listing]
-    Listing --> Documents[Upload documents]
-    Documents --> Approval[Admin approval]
-    Approval --> Live[Publish listing]
-    Live --> Booking[Confirm rental terms]
-    Booking --> Checkout[Pay rental charge + security deposit]
-    Checkout --> Recurring[Create recurring booking payment]
+flowchart TB
+    Visitor[Search location and dates] --> Listings[Compare approved listings]
+    Listings --> Detail[Review garage detail, rate, deposit, and policies]
+    Detail --> Terms[Confirm rental terms]
+    Terms --> Checkout[Pay rental charge + security deposit]
+    Checkout --> Authorised{Payment authorised?}
+    Authorised -->|No| Retry[Correct payment details]
+    Retry --> Checkout
+    Authorised -->|Yes| Booking[Create booking / contract]
+    Booking --> Recurring[Create recurring booking payment]
     Recurring --> Commission[Apply platform service fee]
-    Commission --> OwnerPayment[Track owner payment / settlement state]
+    Commission --> OwnerPayment[Track owner balance and settlement state]
+    OwnerPayment --> Reconcile[Reconcile charge, deposit, fee, and payout]
+
+    Owner[Owner workspace] --> Listing[Create listing]
+    Listing --> Documents[Upload images and insurance documents]
+    Documents --> Approval{Admin review}
+    Approval -->|Approved| Live[Publish listing]
+    Approval -->|Changes needed| Listing
+    Live --> Listings
     Live --> Payment[Promote by postal area]
 ```
 
