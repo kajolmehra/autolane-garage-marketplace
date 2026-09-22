@@ -1,0 +1,11 @@
+.env*
+!.env.example
+google-services.json
+*.pem
+*.key
+*secret*.json
+node_modules/
+build/
+assets/screenshots/raw/
+assets/screenshots/private/
+
